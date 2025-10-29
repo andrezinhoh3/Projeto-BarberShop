@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.math.BigDecimal;
+import java.time.Duration;
 
 @Getter
 @Setter
@@ -25,10 +26,8 @@ public class Servico {
     @Column(name = "preco", nullable = false, precision = 10, scale = 2)
     private BigDecimal preco;
 
-/*
- TODO [Reverse Engineering] create field to map the 'duracao' column
- Available actions: Define target Java type | Uncomment as is | Remove column mapping
-    @Column(name = "duracao", columnDefinition = "interval not null")
-    private Object duracao;
-*/
+
+    @Column(name = "duracao", nullable = false)
+    private Duration duracao;
+
 }
