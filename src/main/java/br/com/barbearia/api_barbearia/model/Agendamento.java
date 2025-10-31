@@ -1,8 +1,11 @@
 package br.com.barbearia.api_barbearia.model;
 
+import br.com.barbearia.api_barbearia.status.StatusAgendamento;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.Check;
+import org.hibernate.annotations.ColumnDefault;
 
 import java.time.OffsetDateTime;
 
@@ -10,6 +13,7 @@ import java.time.OffsetDateTime;
 @Setter
 @Entity
 @Table(name = "agendamento", schema = "barbearia")
+@Check(constraints = "status IN ('PENDENTE', 'CONFIRMADO', 'CANCELADO')")
 public class Agendamento {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,11 +34,12 @@ public class Agendamento {
     @JoinColumn(name = "id_servico", nullable = false)
     private Servico servico;
 
-/*
- TODO [Reverse Engineering] create field to map the 'status' column
- Available actions: Define target Java type | Uncomment as is | Remove column mapping
-    @ColumnDefault("'Pendente'")
-    @Column(name = "status", columnDefinition = "status_agendamento_enum not null")
-    private Object status;
-*/
+
+
+    @Column(name = "status", nullable = false)
+    @Enumerated(EnumType.STRING)
+    @ColumnDefault("'PENDENTE'")
+    private StatusAgendamento status;
+
+
 }
