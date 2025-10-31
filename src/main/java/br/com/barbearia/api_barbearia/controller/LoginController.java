@@ -5,6 +5,10 @@ import br.com.barbearia.api_barbearia.dto.login.LoginResponseDTO;
 import br.com.barbearia.api_barbearia.dto.usuario.UsuarioListagemDTO;
 import br.com.barbearia.api_barbearia.model.Usuario;
 import br.com.barbearia.api_barbearia.service.UsuarioService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -26,6 +30,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/auth/login")
+@Tag(name = "Login de usuarios", description = "Operações relacionados aos login.")
 public class LoginController {
 
     private final UsuarioService usuarioService;
@@ -39,6 +44,14 @@ public class LoginController {
     }
 
     @PostMapping()
+    @Operation(
+            summary = "Login de usuário",
+            description = "Faz o login de usuário."
+    )
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Operação bem-sucedida"),
+            @ApiResponse(responseCode = "401", description = "Dados invalidos fornecido para o login")
+    })
     public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
         try {
             var authToken = new UsernamePasswordAuthenticationToken(

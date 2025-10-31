@@ -1,5 +1,6 @@
 package br.com.barbearia.api_barbearia.dto.usuario;
 
+import jakarta.persistence.Column;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -16,6 +17,7 @@ public class UsuarioCadastroDTO {
 
     @NotBlank(message = "O email não pode estar em branco.")
     @Email(message = "O formato do e-mail é invalido.")
+    @Column(unique = true)
     private String email;
 
     @NotBlank(message = "A senha não pode estar em branco.")

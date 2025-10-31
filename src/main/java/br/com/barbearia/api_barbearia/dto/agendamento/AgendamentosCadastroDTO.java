@@ -24,4 +24,6 @@ public class AgendamentosCadastroDTO {
     @NotBlank(message = "O ID do barbeiro é obrigatório.")
     @Positive(message = "O ID do barbeiro deve ser um número posistivo.")
     private Integer idBarbeiro;
+
+
 }

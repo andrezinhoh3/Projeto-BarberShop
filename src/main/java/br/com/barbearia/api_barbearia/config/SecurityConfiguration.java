@@ -79,7 +79,7 @@ public class SecurityConfiguration {
                         .requestMatchers("/auth/**").permitAll()
                         .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
                         .requestMatchers(HttpMethod.POST, "/usuarios").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/usuario/forgot-password").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/usuarios/forgot-password").permitAll()
                         .requestMatchers(HttpMethod.POST, "/barbeiros/**").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.PUT, "/barbeiros/**").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/barbeiros/**").hasRole("ADMIN")

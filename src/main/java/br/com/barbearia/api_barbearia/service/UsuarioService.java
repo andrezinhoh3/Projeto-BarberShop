@@ -21,7 +21,6 @@ public class UsuarioService {
 
     private final EmailService emailService;
     private final UsuarioRepository usuarioRepository;
-
     private final  PasswordEncoder passwordEncoder;
 
     public UsuarioService(EmailService emailService, UsuarioRepository usuarioRepository, PasswordEncoder passwordEncoder) {
