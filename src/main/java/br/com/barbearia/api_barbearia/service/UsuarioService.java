@@ -6,6 +6,7 @@ import br.com.barbearia.api_barbearia.model.Usuario;
 import br.com.barbearia.api_barbearia.repository.UsuarioRepository;
 
 import jakarta.persistence.EntityNotFoundException;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -18,11 +19,13 @@ import java.util.stream.Collectors;
 @Service
 public class UsuarioService {
 
+    private final EmailService emailService;
     private final UsuarioRepository usuarioRepository;
 
     private final  PasswordEncoder passwordEncoder;
 
-    public UsuarioService(UsuarioRepository usuarioRepository,PasswordEncoder passwordEncoder) {
+    public UsuarioService(EmailService emailService, UsuarioRepository usuarioRepository, PasswordEncoder passwordEncoder) {
+        this.emailService = emailService;
         this.usuarioRepository = usuarioRepository;
         this.passwordEncoder = passwordEncoder;
     }
@@ -55,6 +58,17 @@ public class UsuarioService {
         }
 
         return converterParaListagemDTO(usuario);
+    }
+
+    // Recuperar senha
+    public void recuperarSenha(String email) {
+        usuarioRepository.findByEmail(email).ifPresent(usuario -> {
+            String novaSenha = RandomStringUtils.randomAlphanumeric(10);
+            String senhaCodificada = passwordEncoder.encode(novaSenha);
+            usuario.setSenha(senhaCodificada);
+            usuarioRepository.save(usuario);
+            emailService.enviarEmail(usuario.getEmail(), novaSenha);
+        });
     }
 
     // Cadastrar Usuario

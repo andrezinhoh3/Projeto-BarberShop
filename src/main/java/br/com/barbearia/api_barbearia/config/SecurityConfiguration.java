@@ -59,7 +59,7 @@ public class SecurityConfiguration {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
 
-        config.setAllowedOrigins(List.of("http://localhost:3000"));
+        config.setAllowedOrigins(List.of("http://localhost:5500", "http://127.0.0.1:5500", "http://localhost:3000"));
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         config.setAllowedHeaders(List.of("*"));
         config.setAllowCredentials(true);
@@ -79,6 +79,7 @@ public class SecurityConfiguration {
                         .requestMatchers("/auth/**").permitAll()
                         .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
                         .requestMatchers(HttpMethod.POST, "/usuarios").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/usuario/forgot-password").permitAll()
                         .requestMatchers(HttpMethod.POST, "/barbeiros/**").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.PUT, "/barbeiros/**").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/barbeiros/**").hasRole("ADMIN")

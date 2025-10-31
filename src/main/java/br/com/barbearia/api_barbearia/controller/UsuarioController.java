@@ -1,5 +1,6 @@
 package br.com.barbearia.api_barbearia.controller;
 
+import br.com.barbearia.api_barbearia.dto.usuario.ResetarSenhaDTO;
 import br.com.barbearia.api_barbearia.dto.usuario.UsuarioCadastroDTO;
 import br.com.barbearia.api_barbearia.dto.usuario.UsuarioListagemDTO;
 import br.com.barbearia.api_barbearia.model.Usuario;
@@ -39,6 +40,13 @@ public class UsuarioController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuário não encontrado");
         }
         return ResponseEntity.ok(usuario);
+    }
+
+    // Recuperar senha
+    @PostMapping("/forgot-password")
+    public ResponseEntity<String> forgotPassword(@Valid @RequestBody ResetarSenhaDTO resetarSenhaDTO) {
+        usuarioService.recuperarSenha(resetarSenhaDTO.getEmail());
+        return ResponseEntity.ok("Se um usuário com este e-mail existir, uma nova senha será enviada.");
     }
 
     // Cadastrar Usuarios
